@@ -1,0 +1,36 @@
+#lang sicp
+;http://community.schemewiki.org/?sicp-ex-1.3
+(define (square x) (* x x))
+
+(define (square-sum x y) (+ (square x) (square y)))
+
+(define (sum-of-two-larger-square x y z)
+  (cond ((and (> x y) (> z y)) (square-sum x z))
+        ((and (> y x) (> z x)) (square-sum y z))
+        (else (square-sum x y))))
+
+(sum-of-two-larger-square 2 3 5) ;34
+(sum-of-two-larger-square 3 2 5) ;34
+(sum-of-two-larger-square 2 2 5)
+(sum-of-two-larger-square 2 2 2)
+(sum-of-two-larger-square -2 3 -5) ; 13
+(sum-of-two-larger-square -2 -5 3) ; 13
+
+; The below two resolution are all wrong :(.
+; Wrong Soulution 1.
+;(define (sum-of-two-larger-square x y z)
+; (+ (square-of-larger x y) (square-of-larger y z)))
+
+; Wrong Soulution 2.
+;(define (square-of-larger x y)
+;  (if (> x y)
+;      (square x)
+;      (square y)))
+
+; The below procedure wont' work as expect
+; when the arguments satisfity: y > x > z.
+; I was thinking about why does the below 
+;(define (sum-of-two-larger-square x y z)
+;  (cond ((and (> x y) (> y z)) (square-sum x y))
+;        ((and (> x y) (> z y)) (square-sum x z))
+;        (else (square-sum y z))))
